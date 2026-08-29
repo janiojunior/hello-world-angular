@@ -12,4 +12,23 @@ export class EstadoService {
     findAll(): Observable<Estado[]> {
         return this.http.get<Estado[]>(this.apiUrl);
     }
+
+    findById(id: number): Observable<Estado> {
+        const url = `${this.apiUrl}/${id}`;
+        return this.http.get<Estado>(url);
+    }
+
+    create(estado: Estado): Observable<Estado> {
+        return this.http.post<Estado>(this.apiUrl, estado);
+    }
+
+    update(id: number, estado: Estado): Observable<Estado> {
+        const url = `${this.apiUrl}/${id}`;
+        return this.http.put<Estado>(url, estado);
+    }
+
+    delete(id: number): Observable<void> {
+        const url = `${this.apiUrl}/${id}`;
+        return this.http.delete<void>(url);
+    }
 }
