@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { EstadoList } from './components/estados/estado-list/estado-list';
+import { EstadoForm } from './components/estados/estado-form/estado-form';
 
 export const routes: Routes = [
-    {
-        path: 'estados', component: EstadoList, title: 'Lista de Estados',
-    }
+    {path: 'estados', component: EstadoList, title: 'Lista de Estados',},
+    {path: 'estados/new', component: EstadoForm, title: 'Novo Estado',}
 ];

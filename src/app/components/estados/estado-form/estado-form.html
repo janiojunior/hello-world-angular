@@ -1,1 +1,41 @@
-<p>estado-form works!</p>
+<mat-toolbar class="toolbar-title">
+    Controle de Estados
+</mat-toolbar>
+
+<mat-card class="card">
+    <mat-card-content>
+        <form class="form" [formGroup]="form">
+            <div class="grid">
+
+                <!-- Nome -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Nome</mat-label>
+                    <input matInput formControlName="nome" placeholder="Ex.: Tocantins" />
+                </mat-form-field>
+
+                <!-- Sigla -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Sigla (UF)</mat-label>
+                    <input matInput formControlName="sigla" maxlength="2" placeholder="Ex.: TO" />
+                </mat-form-field>
+
+            </div>
+
+
+            <div class="actions">
+                <button mat-raised-button routerLink="/estados">
+                    Cancelar
+                </button>
+
+                <button mat-raised-button color="warn" [disabled]="!form.value.id">
+                    Excluir
+                </button>
+
+                <button mat-raised-button color="primary" (click)="salvar()" [disabled]="form.invalid">
+                    Salvar
+                </button>
+            </div>
+
+        </form>
+    </mat-card-content>
+</mat-card>
