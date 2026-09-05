@@ -21,6 +21,15 @@ mat-card-actions {
     justify-content: flex-end;
 }
 
+.actions {
+    display: flex;
+    align-items: center;
+}
+
+.actions button[color="warn"] {
+    margin-right: auto;
+}
+
 /* para a div */
 .form-container {
     padding: 2rem;

@@ -13,7 +13,7 @@ export class EstadoService {
         return this.http.get<Estado[]>(this.apiUrl);
     }
 
-    findById(id: number): Observable<Estado> {
+    findById(id: any): Observable<Estado> {
         const url = `${this.apiUrl}/${id}`;
         return this.http.get<Estado>(url);
     }

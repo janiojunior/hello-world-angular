@@ -21,7 +21,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 })
 export class EstadoList {
 
-  displayedColumns: string[] = ['numero', 'nome', 'sigla', 'acao'];
+  displayedColumns: string[] = ['numero', 'nome', 'sigla', 'regiao', 'acao'];
   dataSource = new MatTableDataSource<Estado>();
 
   constructor(private estadoService: EstadoService) { }
