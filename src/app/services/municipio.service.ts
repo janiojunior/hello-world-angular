@@ -3,6 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Municipio } from '../models/municipio.model';
 
+type MunicipioPayload = Omit<Municipio, 'estado'> & {
+    estado?: Municipio['estado'];
+    idEstado?: number;
+};
+
 export interface MunicipioPagedResponse<T> {
     items: T[];
     page: number;
@@ -17,6 +22,13 @@ export class MunicipioService {
 
     constructor(private http: HttpClient) {}
 
+    private toPayload(municipio: Municipio): MunicipioPayload {
+        return {
+            ...municipio,
+            idEstado: municipio.estado?.id,
+        };
+    }
+
     findAll(page: number = 0, pageSize: number = 10): Observable<MunicipioPagedResponse<Municipio>> {
         return this.http.get<MunicipioPagedResponse<Municipio>>(
             `${this.apiUrl}?page=${page}&pageSize=${pageSize}`
@@ -29,12 +41,12 @@ export class MunicipioService {
     }
 
     create(municipio: Municipio): Observable<Municipio> {
-        return this.http.post<Municipio>(this.apiUrl, municipio);
+        return this.http.post<Municipio>(this.apiUrl, this.toPayload(municipio));
     }
 
     update(id: number, municipio: Municipio): Observable<Municipio> {
         const url = `${this.apiUrl}/${id}`;
-        return this.http.put<Municipio>(url, municipio);
+        return this.http.put<Municipio>(url, this.toPayload(municipio));
     }
 
     delete(id: number): Observable<void> {

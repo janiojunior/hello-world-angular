@@ -51,7 +51,6 @@ export class EstadoList {
   loadEstados() {
     this.estadoService.findAll(this.pageIndex, this.pageSize).subscribe((response) => {
       this.dataSource.data = response.items;
-      console.log('Estados carregados:', response.items);
       this.pageIndex = response.page;
       this.pageSize = response.pageSize;
       this.totalItems = response.totalItems;

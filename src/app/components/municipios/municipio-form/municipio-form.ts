@@ -46,7 +46,7 @@ export class MunicipioForm implements OnInit {
     this.form = this.fb.group({
       id: [null],
       nome: [''],
-      idEstado: null,
+      estado: [null],
     });
   }
 
@@ -62,7 +62,13 @@ export class MunicipioForm implements OnInit {
         this.estados = response.items;
 
         if (municipio?.estado?.id) {
-          this.form.patchValue({ idEstado: municipio.estado.id });
+          const estadoSelecionado = this.estados.find(
+            (estado) => estado.id === municipio.estado?.id,
+          );
+
+          if (estadoSelecionado) {
+            this.form.patchValue({ estado: estadoSelecionado });
+          }
         }
       },
       error: (error) => {

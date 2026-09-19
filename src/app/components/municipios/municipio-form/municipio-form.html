@@ -13,9 +13,9 @@
 
                 <mat-form-field appearance="outline" class="full-width-input">
                     <mat-label>Estado</mat-label>
-                    <mat-select formControlName="idEstado" placeholder="Selecione um estado">
+                    <mat-select formControlName="estado" placeholder="Selecione um estado">
                         @for (estado of estados; track estado.id) {
-                            <mat-option [value]="estado.id">{{estado.nome}} ({{estado.sigla}})</mat-option>
+                            <mat-option [value]="estado">{{estado.nome}} ({{estado.sigla}})</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
