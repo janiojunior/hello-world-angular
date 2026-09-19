@@ -4,5 +4,11 @@ import { EstadoService } from '../services/estado.service';
 import { Estado } from '../models/estado.model';
 
 export const estadoResolver: ResolveFn<Estado> = (route, state) => {
-  return inject(EstadoService).findById(route.paramMap.get('id'));
+  const id = route.paramMap.get('id');
+
+  if (!id) {
+    throw new Error('Estado id is required.');
+  }
+
+  return inject(EstadoService).findById(id);
 };

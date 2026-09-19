@@ -1,7 +1,15 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, Service } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Estado } from '../models/estado.model';
 import { Observable } from 'rxjs';
+
+export interface PagedResponse<T> {
+    items: T[];
+    page: number;
+    pageSize: number;
+    totalItems: number;
+    totalPages: number;
+}
 
 @Injectable({providedIn: 'root'})
 export class EstadoService {
@@ -9,11 +17,13 @@ export class EstadoService {
 
     constructor(private http: HttpClient) {}
 
-    findAll(): Observable<Estado[]> {
-        return this.http.get<Estado[]>(this.apiUrl);
+    findAll(page: number = 0, pageSize: number = 10): Observable<PagedResponse<Estado>> {
+        return this.http.get<PagedResponse<Estado>>(
+            `${this.apiUrl}?page=${page}&pageSize=${pageSize}`
+        );
     }
 
-    findById(id: any): Observable<Estado> {
+    findById(id: number | string): Observable<Estado> {
         const url = `${this.apiUrl}/${id}`;
         return this.http.get<Estado>(url);
     }

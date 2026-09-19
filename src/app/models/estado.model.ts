@@ -4,5 +4,6 @@ export class Estado {
     id!: number;
     nome!: string;
     sigla!: string;
-    regiao!: Regiao;
+    idRegiao?: number;
+    regiao?: Regiao;
 }
