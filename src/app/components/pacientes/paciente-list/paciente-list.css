@@ -1,0 +1,41 @@
+.toolbar-title {
+  flex: 1;
+  text-align: center;
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.mat-column-nome {
+  min-width: 14em;
+  width: 14em;
+}
+
+.mat-column-cpf {
+  min-width: 11em;
+  width: 11em;
+}
+
+.mat-column-email {
+  width: 100%;
+}
+
+.mat-column-dataNascimento {
+  min-width: 9em;
+  width: 9em;
+  text-align: center;
+}
+
+.mat-column-ativo {
+  min-width: 8em;
+  width: 8em;
+  text-align: center;
+}
+
+.mat-column-acao {
+  text-align: center;
+  min-width: 10em;
+}

@@ -4,11 +4,14 @@
 
 <mat-card class="card">
     <mat-card-content>
-        <form class="form" [formGroup]="form">
+        <form class="form" [formGroup]="form" (ngSubmit)="salvar()">
             <div class="grid">
                 <mat-form-field appearance="outline" class="full-width-input">
                     <mat-label>Nome</mat-label>
-                    <input matInput formControlName="nome" placeholder="Ex.: Palmas" />
+                    <input matInput formControlName="nome" maxlength="60" placeholder="Ex.: Palmas" />
+                    @if (getErrorMessage('nome'); as error) {
+                        <mat-error>{{ error }}</mat-error>
+                    }
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="full-width-input">
@@ -18,6 +21,9 @@
                             <mat-option [value]="estado">{{estado.nome}} ({{estado.sigla}})</mat-option>
                         }
                     </mat-select>
+                    @if (getErrorMessage('estado'); as error) {
+                        <mat-error>{{ error }}</mat-error>
+                    }
                 </mat-form-field>
             </div>
 
@@ -37,8 +43,8 @@
 
                 <button mat-raised-button
                     color="primary"
-                    (click)="salvar()"
-                    [disabled]="form.invalid">
+                    type="submit"
+                    >
                     <mat-icon>save</mat-icon>
                     Salvar
                 </button>

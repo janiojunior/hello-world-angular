@@ -1,0 +1,242 @@
+<mat-toolbar class="toolbar-title" color="primary">
+  Controle de Psicólogos
+</mat-toolbar>
+
+<mat-card class="card">
+  <mat-card-content>
+    <form class="form" [formGroup]="form" (ngSubmit)="salvar()">
+      <div class="grid">
+        <mat-form-field appearance="outline" class="full-width-input">
+          <mat-label>CPF</mat-label>
+          <input
+            matInput
+            formControlName="cpf"
+            maxlength="11"
+            placeholder="Somente números"
+          />
+          @if (getErrorMessage('cpf'); as error) {
+            <mat-error>{{ error }}</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="cpf-actions">
+          <button
+            mat-raised-button
+            color="accent"
+            type="button"
+            (click)="buscarPorCpf()"
+            [disabled]="form.get('cpf')?.invalid"
+          >
+            <mat-icon>search</mat-icon>
+            Buscar CPF
+          </button>
+        </div>
+
+        @if (cpfLookupMessage) {
+          <div
+            class="lookup-banner full-width"
+            [class.lookup-success]="cpfLookupState === 'psicologo'"
+            [class.lookup-info]="cpfLookupState === 'pessoa'"
+            [class.lookup-neutral]="cpfLookupState === 'nao-encontrado'"
+          >
+            {{ cpfLookupMessage }}
+          </div>
+        }
+
+        <mat-form-field appearance="outline" class="full-width-input">
+          <mat-label>Nome</mat-label>
+          <input matInput formControlName="nome" placeholder="Nome completo" />
+          @if (getErrorMessage('nome'); as error) {
+            <mat-error>{{ error }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width-input">
+          <mat-label>E-mail</mat-label>
+          <input matInput formControlName="email" placeholder="nome@exemplo.com" />
+          @if (getErrorMessage('email'); as error) {
+            <mat-error>{{ error }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width-input">
+          <mat-label>Data de nascimento</mat-label>
+          <input matInput type="date" formControlName="dataNascimento" />
+          @if (getErrorMessage('dataNascimento'); as error) {
+            <mat-error>{{ error }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width-input">
+          <mat-label>Gênero</mat-label>
+          <input matInput formControlName="genero" maxlength="30" />
+          @if (getErrorMessage('genero'); as error) {
+            <mat-error>{{ error }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width-input full-width">
+          <mat-label>Endereço</mat-label>
+          <textarea
+            matInput
+            formControlName="endereco"
+            rows="2"
+            maxlength="255"
+          ></textarea>
+          @if (getErrorMessage('endereco'); as error) {
+            <mat-error>{{ error }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width-input">
+          <mat-label>CRP</mat-label>
+          <input matInput formControlName="crp" maxlength="20" />
+          @if (getErrorMessage('crp'); as error) {
+            <mat-error>{{ error }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width-input">
+          <mat-label>Especialidade</mat-label>
+          <input matInput formControlName="especialidade" maxlength="120" />
+          @if (getErrorMessage('especialidade'); as error) {
+            <mat-error>{{ error }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width-input">
+          <mat-label>Valor da consulta</mat-label>
+          <input matInput type="number" min="0.01" step="0.01" formControlName="valorConsulta" />
+          @if (getErrorMessage('valorConsulta'); as error) {
+            <mat-error>{{ error }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width-input">
+          <mat-label>Duração da consulta (min)</mat-label>
+          <input matInput type="number" min="1" step="1" formControlName="duracaoConsulta" />
+          @if (getErrorMessage('duracaoConsulta'); as error) {
+            <mat-error>{{ error }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width-input">
+          <mat-label>Situação</mat-label>
+          <mat-select formControlName="ativo" placeholder="Selecione">
+            <mat-option [value]="true">Ativo</mat-option>
+            <mat-option [value]="false">Inativo</mat-option>
+          </mat-select>
+          @if (getErrorMessage('ativo'); as error) {
+            <mat-error>{{ error }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width-input full-width">
+          <mat-label>Bio</mat-label>
+          <textarea matInput formControlName="bio" rows="4"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="telefones-section" formArrayName="telefones">
+        <div class="telefones-header">
+          <h3>Telefones</h3>
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            (click)="adicionarTelefone()"
+          >
+            <mat-icon>add</mat-icon>
+            Adicionar telefone
+          </button>
+        </div>
+
+        @if (getTelefonesErrorMessage(); as error) {
+          <div class="array-error">{{ error }}</div>
+        }
+
+        @for (telefone of telefones.controls; track telefone) {
+          <div class="telefone-card" [formGroupName]="$index">
+            <div class="telefone-grid">
+              <mat-form-field appearance="outline" class="full-width-input">
+                <mat-label>DDD</mat-label>
+                <input
+                  matInput
+                  formControlName="codigoArea"
+                  maxlength="3"
+                  placeholder="Ex.: 63"
+                />
+                @if (getTelefoneErrorMessage($index, 'codigoArea'); as error) {
+                  <mat-error>{{ error }}</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width-input">
+                <mat-label>Número</mat-label>
+                <input
+                  matInput
+                  formControlName="numero"
+                  maxlength="15"
+                  placeholder="Ex.: 999999999"
+                />
+                @if (getTelefoneErrorMessage($index, 'numero'); as error) {
+                  <mat-error>{{ error }}</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width-input">
+                <mat-label>WhatsApp</mat-label>
+                <mat-select formControlName="whatsapp">
+                  <mat-option [value]="true">Sim</mat-option>
+                  <mat-option [value]="false">Não</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <div class="telefone-actions">
+                <button
+                  mat-raised-button
+                  color="warn"
+                  type="button"
+                  (click)="removerTelefone($index)"
+                  [disabled]="telefones.length === 1"
+                >
+                  <mat-icon>delete</mat-icon>
+                  Remover
+                </button>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="actions">
+        <button
+          mat-raised-button
+          color="warn"
+          type="button"
+          (click)="excluir()"
+          [disabled]="!form.value.id"
+        >
+          <mat-icon>delete</mat-icon>
+          Excluir
+        </button>
+
+        <button mat-raised-button type="button" (click)="voltar()">
+          <mat-icon>arrow_back</mat-icon>
+          Cancelar
+        </button>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="form.invalid"
+        >
+          <mat-icon>save</mat-icon>
+          Salvar
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,133 @@
+.toolbar-title {
+  display: flex;
+  justify-content: center;
+  font-size: x-large;
+}
+
+.card {
+  max-width: 980px;
+  margin: 2rem auto;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.full-width-input {
+  width: 100%;
+}
+
+.cpf-actions {
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+}
+
+.lookup-banner {
+  border-radius: 8px;
+  padding: 0.875rem 1rem;
+  font-size: 0.95rem;
+}
+
+.lookup-success {
+  background: #e8f5e9;
+  color: #1b5e20;
+}
+
+.lookup-info {
+  background: #e3f2fd;
+  color: #0d47a1;
+}
+
+.lookup-neutral {
+  background: #f5f5f5;
+  color: #424242;
+}
+
+.telefones-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.telefones-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.telefones-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.telefone-card {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.telefone-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr auto;
+  gap: 1rem;
+  align-items: start;
+}
+
+.telefone-actions {
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+}
+
+.array-error {
+  color: #b3261e;
+  font-size: 0.875rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.actions button[color='warn'] {
+  margin-right: auto;
+}
+
+button[mat-raised-button] {
+  min-width: 120px;
+}
+
+@media (max-width: 768px) {
+  .telefone-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cpf-actions {
+    min-height: auto;
+  }
+
+  .actions {
+    flex-wrap: wrap;
+  }
+
+  .actions button[color='warn'] {
+    margin-right: 0;
+  }
+}
